@@ -1,0 +1,35 @@
+# 1. Longest Substring Without Repeating CharactersGiven a string s, find the length of the longestsubstring without repeating characters.
+# Input: s = "abcabcbb"
+# Output: 3
+# Explanation: The answer is "abc", with a length of 3.
+class solution:
+    def length_of_longest_substring(s):
+        # Dictionary to store the last index where each character was seen
+        last_seen = {}
+
+        # Left pointer for the current window (start of substring)
+        left = 0
+
+        # Maximum length found
+        max_length = 0
+
+        # Loop over the string with right pointer
+        for right in range(len(s)):
+            char = s[right]
+
+            # If char was seen and is inside the current window
+            if char in last_seen:
+                if last_seen[char] >= left:
+                # Move the left pointer to one after the last seen index
+                    left = last_seen[char] + 1
+
+            # Update last seen index of the current character
+            last_seen[char] = right
+
+            # Update max_length
+            max_length = max(max_length, right - left + 1)
+            print(max_length)
+
+        return max_length
+    length_of_longest_substring("sahithi")
+

@@ -1,0 +1,106 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    # The main function the online judge (or you) will call.
+    # It answers the question: "How many nodes (pieces) are in this tree?"
+    def countnodes(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: int
+        """
+        """
+        :type root: Optional[TreeNode]
+        :rtype: int
+
+        Below we use plain-English comments so that when you revisit this code
+        you'll remember what each part is doing even if you don't know much about coding.
+        """
+        # -- 1) Base case: if there is no tree (root is None), there are 0 nodes.
+        # This line stops the function early when the tree is empty.
+        
+        if root is None:
+            return 0
+        # -- 2) Helper function: compute the height by always going left
+        # This measures how many levels exist following only 'left' children.
+        # We define height here as the number of nodes on the path from the current node
+        # down to the leftmost leaf, including the current node itself.
+        def lheight(node):
+            # If we reach a non-existing node, height contribution is 0.
+            if node is None:
+                return 0
+            # Otherwise, count this node (1) and continue down to the left child.
+            # The recursion repeats the same logic for node.left until it reaches the bottom.
+            return 1 + lheight(node.left)
+            # -- 3) Helper function: compute the height by always going right
+        # This measures the number of levels following only 'right' children.
+        # Same idea as lheight but following right pointers instead.
+        
+        def rheight(node):
+            if node is None:
+                return 0
+            return 1 + rheight(node.right)
+        # -- 4) Compute leftmost height and rightmost height of the whole tree.
+        # For a complete binary tree, these two heights tell us something important:
+        #   * If they are equal, every level of the tree is fully filled (perfect tree).
+        #   * If they are different, the last level is partially filled.
+        l,r = lheight(root), rheight(root)
+        # -- 5) If left height and right height are the same, the tree is perfect.
+        # For a perfect binary tree of height h (counting nodes on a path), the total
+        # number of nodes equals 2^h - 1. Example: height 3 -> 2^3 - 1 = 7 nodes.
+
+        if l == r:
+            # Using the mathematical formula avoids visiting every node.
+            return (2**l) - 1
+        # -- 6) Otherwise, the tree is not perfect: count recursively.
+        # We count:
+        #   * 1 for the current root node
+        #   * plus the total nodes in the left subtree
+        #   * plus the total nodes in the right subtree
+        # Recursion means the same countnodes function will be used on the smaller trees.
+        else:
+            return 1 + self.countnodes(root.left) + self.countnodes(root.right)
+        
+
+
+
+        # -----------------------
+# Short plain-English summary to keep as a header comment in the file:
+#
+# What this code does (in everyday words):
+# - We want to know how many nodes are in a "complete binary tree".
+#   A complete tree fills every level except possibly the last, and the last level
+#   is filled from left to right.
+# - The trick: for many nodes we can decide without looking at every node.
+#   If the leftmost path and the rightmost path have the same length,
+#   the tree is perfect (every level completely filled), and we can use the
+#   formula nodes = 2^height - 1 instead of counting each node.
+# - If not perfect, we split the problem: count nodes in left and right subtrees,
+#   and add 1 for the root. Because each subtree is smaller, recursion finishes.
+#
+# Why this is smart:
+# - A naive approach would visit every node (O(n) time).
+# - This approach uses the tree's shape to avoid visiting all nodes when possible,
+#   giving a faster algorithm (roughly O((log n)^2) time in the worst case).
+#
+# Complexity notes (for future you):
+# - Time: O((log n)^2) — because at each level (O(log n) levels) we compute heights
+#   which take O(log n) time each.
+# - Space: O(log n) — recursion stack height for a complete tree is proportional to its height.
+#
+# Small practical note:
+# - The helper height functions here are written recursively for clarity.
+#   If you prefer, you can write them iteratively (using a loop) to avoid small,
+#   extra function-call overhead. That does not change the big-O complexity,
+#   but it can be marginally faster in practice.
+#
+# Example of iterative height (optional, for reference only, not required):
+# def lheight_iter(node):
+#     h = 0
+#     while node:
+#         h += 1
+#         node = node.left
+#     return h

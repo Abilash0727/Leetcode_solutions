@@ -1,0 +1,31 @@
+# For a given string s of length n, our task is to determine whether the string is a palindrome. A palindrome can have either an odd or even length.
+
+# If the string has an odd length, we consider the center of the string as n // 2.
+
+# If the string has an even length, the center lies between the two middle characters, so we initialize two pointers: left = n // 2 - 1 and right = n // 2.
+
+# From the center, we use the two pointers to expand outwards: move the left pointer to the left (left - 1) and the right pointer to the right (right + 1) while the characters at both pointers are equal.
+
+# If at any point the characters at the left and right pointers do not match, the string is not a palindrome. If we can expand the pointers to the ends of the string without mismatches, the string is a valid palindrome.
+
+# This approach efficiently checks whether the entire string is a palindrome, handling both odd and even lengths correctly.
+
+class Solution:
+    def valid_palindrome():
+        s = "abcacba"
+        n = len(s)
+        l = 0
+        r = n - 1
+        while l < r:
+            if s[l] != s[r]:
+                print("not a palindrome")
+                return False
+            l += 1
+            r -= 1
+        print("palindrome")
+        return True
+    valid_palindrome()
+
+
+            
+        

@@ -1,0 +1,48 @@
+class Solution:
+    def symmetrictree(self, root):
+        # 🌱 Step 1: If the tree is empty, then it's symmetric by default.
+        # An empty tree has no nodes to compare, so we return True.
+        if root is None:
+            return True
+        # 🌿 Step 2: Define a helper function (inside this main function)
+        # This helper function will compare two nodes: one from the left side and one from the right side.
+        # It checks whether they are mirror images of each other.
+        def isMirror(left, right):
+            # 🪞 Step 2.1: If both sides are empty (None), they match perfectly.
+            # For example: both have no child nodes -> they are mirror images (True).
+            if left is None and right is None:
+                return True
+            # ⚠️ Step 2.2: If only one side is empty (but not both),
+            # it means one side has a node and the other doesn’t -> not mirror (False).
+            if left is None or right is None:
+                return False
+             # 🧩 Step 2.3: Now, if both sides exist (not None),
+            # check if their values (numbers in the nodes) are the same.
+            # Example: both nodes have value 2 -> possible mirror, continue checking.
+            # If values are different -> directly return False.
+            if left.val == right.val:
+                # 🔁 Step 2.4: Now we need to compare their children in a mirror way.
+                # This is the key mirror logic:
+                #    - The LEFT child of the left node should match the RIGHT child of the right node.
+                #    - The RIGHT child of the left node should match the LEFT child of the right node.
+                # Why? Because mirror image means the outer sides and inner sides are swapped.
+
+                # Call the helper function again (recursively) for both pairs:
+                left_is_same = isMirror(left.left, right.right)     # outer comparison
+                right_is_same = isMirror(left.right, right.left)    # inner comparison
+                # ✅ Step 2.5: If both outer and inner parts match, then the current nodes are symmetric.
+                # If either one is False, the whole thing fails.
+                if left_is_same and right_is_same:
+                    return True
+                else:
+                    return False
+            else:
+                # 🚫 Step 2.6: If the current node values are not equal,
+                # no need to check further — not symmetric.
+
+                return False
+            # 🌲 Step 3: Start the mirror comparison from the root node.
+        # We compare the left subtree and the right subtree of the root.
+        # Example: root.left ↔ root.right
+        return isMirror(root.left, root.right)
+

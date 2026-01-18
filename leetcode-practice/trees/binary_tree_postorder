@@ -1,0 +1,11 @@
+# Postorder
+def postorder_traversal(self, root):
+    result = []
+    def postorder(node):
+        if node is None:
+            return
+        postorder(node.left)
+        postorder(node.right)
+        result.append(node.val)   # visit node last
+    postorder(root)
+    return result

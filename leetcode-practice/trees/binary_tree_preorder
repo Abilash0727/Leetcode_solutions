@@ -1,0 +1,12 @@
+# Preorder
+def preorder_traversal(self, root):
+    result = []
+    def preorder(node):
+        if node is None:
+            return
+        result.append(node.val)   # visit node first
+        preorder(node.left)
+        preorder(node.right)
+    preorder(root)
+    return result
+

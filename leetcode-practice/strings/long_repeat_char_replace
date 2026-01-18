@@ -1,0 +1,94 @@
+#You are given a string s and an integer k. You can choose anycharacter of the string and change it to any other uppercaseEnglish character. You can perform this operation at most k times. 
+# Return the length of the longest substring containing the sameletter you can get after performing the above operations.
+#Input: s = "ABAB", k = 2
+#Output: 4
+#Explanation: Replace the two 'A's with two 'B's or vice versa.
+class Solution:
+    def character_replacement(self):
+        # Input string and allowed number of changes
+        s = "ABAB"
+        k = 2
+
+        n = len(s)  # Length of the string
+        l = 0       # Left pointer of the sliding window
+        r = 0       # Right pointer of the sliding window
+        freq = {}   # Dictionary to store frequency of each character in current window
+        hf = 0      # Highest frequency of any single character in current window
+        max_len = 0 # Length of the longest substring we can make by replacements
+
+        # Go through the string with the right pointer
+        while r < n:
+            # Add current character to the frequency dictionary
+            freq[s[r]] = freq.get(s[r], 0) + 1
+
+            # Update the highest frequency in the current window
+            hf = max(hf, freq[s[r]])
+
+            # Current window size
+            window_size = r - l + 1
+
+            # Check if we need more than 'k' replacements
+            if window_size - hf > k:
+                # Too many replacements needed, shrink window from left
+                freq[s[l]] -= 1   # Reduce frequency of leftmost character
+                l += 1            # Move left pointer right
+
+            # Update the maximum length of valid substring
+            max_len = max(max_len, r - l + 1)
+
+            # Expand window by moving right pointer
+            r += 1
+
+        print("Longest substring length after replacements:", max_len)
+        return max_len
+    
+
+
+"""
+# Example inputs:
+print(characterReplacement("ABAB", 2))      # Expected Output: 4 (Detailed Step-by-Step Explanation (Dry Run):
+Example 1: s = "ABAB", k = 2
+Initialization:
+
+l = 0, r = 0, ssl = 0, hf = 0, freq = {}
+n = 4 (length of string)
+
+Iteration 1 (r = 0):
+Current char = A
+Add to freq → freq = {'A': 1}
+Update hf = max(0, 1) = 1
+Window size = r - l + 1 = 1
+Check (window_size - hf) = (1 - 1) = 0 → 0 ≤ k (2) → valid
+Update ssl = max(0, 1) = 1
+Move r → 1
+
+Iteration 2 (r = 1):
+Current char = B
+Add to freq → freq = {'A': 1, 'B': 1}
+Update hf = max(1, 1) = 1
+Window size = 2
+Check (window_size - hf) = (2 - 1) = 1 → 1 ≤ k (2) → valid
+Update ssl = max(1, 2) = 2
+Move r → 2
+
+Iteration 3 (r = 2):
+Current char = A
+Add to freq → freq = {'A': 2, 'B': 1}
+Update hf = max(1, 2) = 2
+Window size = 3
+Check (window_size - hf) = (3 - 2) = 1 → 1 ≤ k (2) → valid
+Update ssl = max(2, 3) = 3
+Move r → 3
+
+Iteration 4 (r = 3):
+Current char = B
+Add to freq → freq = {'A': 2, 'B': 2}
+Update hf = max(2, 2) = 2
+Window size = 4
+Check (window_size - hf) = (4 - 2) = 2 → 2 ≤ k (2) → valid
+Update ssl = max(3, 4) = 4
+Move r → 4 → stop loop because r == n.
+
+Answer: ssl = 4 
+"""
+

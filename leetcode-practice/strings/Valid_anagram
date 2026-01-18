@@ -1,0 +1,58 @@
+# This program checks if two strings are anagrams of each other.
+# --------------------------------------------------------------
+# What is an anagram?
+# Two strings are called anagrams if they contain the same characters
+# with the same frequency, but possibly in a different order.
+# Example: "listen" and "silent" are anagrams.
+
+class Solution:
+    def valid_anagram(self):
+        # Step 1: Define two strings to compare
+        s = "abc"
+        t = "bca"
+
+        # Step 2: If both strings don't have the same length,
+        # they can never be anagrams.
+        if len(s) != len(t):
+            print("not an anagram (different lengths)")
+            return False
+
+        # Step 3: Create a dictionary (called 'counts') to store
+        # how many times each character appears in string s.
+        # Example: for "abc" -> {'a': 1, 'b': 1, 'c': 1}
+        counts = {}
+        for char in s:
+            # counts.get(char, 0) returns the current count (or 0 if not found)
+            counts[char] = counts.get(char, 0) + 1
+
+        # Step 4: Now loop through string t.
+        # For each character in t, reduce its count in the dictionary.
+        for char in t:
+            # If the character is not in counts, it means 't' has an extra letter
+            # that 's' does not have → not an anagram
+            if char not in counts:
+                print(f"'{char}' not found in first string -> not an anagram")
+                return False
+
+            # Decrease the count for this character
+            counts[char] -= 1
+
+            # If the count becomes 0, remove the key from dictionary
+            if counts[char] == 0:
+                del counts[char]
+
+        # Step 5: After going through all characters,
+        # the dictionary should be empty if every character matched perfectly.
+        if not counts:
+            print("anagram")
+            return True
+        else:
+            print("not an anagram")
+            return False
+
+
+# Create an object of Solution class and call the method
+sol = Solution()
+sol.valid_anagram()
+
+    

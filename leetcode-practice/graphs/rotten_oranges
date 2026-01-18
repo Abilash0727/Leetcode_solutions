@@ -1,0 +1,31 @@
+class Solution:
+    from collections import deque
+    def rottenoranges(grid):
+        rows = len(grid)
+        cols = len(grid[0])
+        queue = deque()
+        fresh = 0
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] = 2
+                    queue.append((r, c, 0))
+                elif grid[r][c] = 1
+                    fresh += 1
+        if fresh == 0
+            return 0
+        time = 0
+        directions = [(1,0), (-1,0), (0,1), (0, -1)]
+        while queue:
+            r, c, t = queue.popleft()
+            time = t
+
+
+
+        """
+        |    | C0     | C1     | C2     |
+        | -- | ------ | ------ | ------ |
+        | R0 | 🤢 (2) | 🍊 (1) | 🍊 (1) |
+        | R1 | 🍊 (1) | 🍊 (1) | ⬜ (0)  |
+        | R2 | ⬜ (0)  | 🍊 (1) | 🍊 (1) |
+
+        """

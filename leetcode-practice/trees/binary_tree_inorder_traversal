@@ -1,0 +1,72 @@
+class Node:
+    def __init__(self, val = 0, left = None, right = None):
+        self.val = val
+        self.left = None
+        self.right = None
+
+def inordertreebuilder(self):
+    input = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
+    root = Node(1)
+    root.left = Node(2)
+    root.right = Node(3)
+    root.left.left = Node(4)
+    root.left.right = Node(5)
+    root.right.left = Node(None)
+    root.right.right = Node(8)
+    root.left.left.left = Node(None)
+    root.left.left.right = Node(None)
+    root.left.right.left = Node(6)
+    root.left.right.right = Node(7)
+    root.right.left.left = Node(9)
+    print(root)
+    return root
+
+class Solution:
+    def __init__(self):
+        self.root = self.inordertreebuilder()
+        print(self.root)
+    
+    ## cL
+
+    # def inordertreebuilder(self):
+    #     input = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
+    #     root = Node(1)
+    #     root.left = Node(2)
+    #     root.right = Node(3)
+    #     root.left.left = Node(4)
+    #     root.left.right = Node(5)
+    #     root.right.left = Node(None)
+    #     root.right.right = Node(8)
+    #     root.left.left.left = Node(None)
+    #     root.left.left.right = Node(None)
+    #     root.left.right.left = Node(6)
+    #     root.left.right.right = Node(7)
+    #     root.right.left.left = Node(9)
+    #     print(root)
+    #     return root
+    
+    def inordertraversal(self, root):
+
+        result = []
+        def inorder(node):
+            if node is None:
+                return
+            inorder(node.left)
+            result.append(node.val)
+            inorder(node.right)
+        inorder(root)
+        return result
+    
+
+
+
+if __name__ == "__main__":
+    
+    tree_builder = Solution()
+    root = inordertreebuilder()
+    print(tree_builder.root)
+    result = tree_builder.inordertraversal(root)
+    print(result)
+            
+        
+

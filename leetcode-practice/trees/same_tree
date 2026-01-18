@@ -1,0 +1,106 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def isSameTree(self, p, q):
+        """
+        :type p: Optional[TreeNode]
+        :type q: Optional[TreeNode]
+        :rtype: bool
+        """
+        if p is None and q is None:
+            return True
+        if p is None or q is None:
+            return False
+        if p.val != q.val:
+            return False
+        
+        left_sametree = self.isSameTree(p.left, q.left)
+        right_sametree = self.isSameTree(p.right, q.right)
+
+        if left_sametree and right_sametree:
+            return True
+        else:
+            return False
+        
+        """
+        We are asked to check if two binary trees (p and q) are exactly the same.
+        That means:
+        They have the same structure (same shape).
+        The numbers (or values) in each matching position are the same.
+
+        Tree p:         Tree q:         
+    1               1
+   / \             / \
+  2   3           2   3
+These are the same trees.
+Tree p:         Tree q:
+    1               1
+   / \             /
+  2   3           2
+These are not the same — because one has a right child (3), the other doesn’t.
+
+2) In some problems, we store values in a list or set when we "walk" through a tree.
+   For example, when doing inorder traversal, you might collect all values first, like this:
+   values = []
+def inorder(root):
+    if root:
+        inorder(root.left)
+        values.append(root.val)
+        inorder(root.right)
+But in this problem, we don’t need to store anything — because we just need to compare directly.
+
+3)  Here’s the key idea:
+We are not collecting values — we are checking each node as we go.
+return (p.val == q.val and
+        self.isSameTree(p.left, q.left) and
+        self.isSameTree(p.right, q.right))
+
+        That means:
+Check if the current nodes (p and q) have the same value.
+Then check if their left subtrees are the same.
+Then check if their right subtrees are the same.
+If all three are true → the trees are the same.
+So instead of storing the values, we’re comparing directly on the fly (as we visit each node).
+
+4) What happens behind the scenes (recursion)
+Think of recursion as a function that calls itself to handle smaller pieces of the same problem.
+Here’s what happens:
+Start from the roots of both trees (p and q).
+Compare their values:
+If both are None (empty), return True — both trees are empty here.
+If one is empty and the other isn’t, return False.
+If both have values, check if the values match.
+Then, instead of stopping, the function calls itself again to check:
+the left children (p.left, q.left)
+the right children (p.right, q.right)
+Each of these smaller calls does the same checking process.
+This continues automatically until the entire tree has been checked.
+
+5) Simple analogy
+Imagine two trees as family trees — like two identical family charts.
+You can check if they’re the same in two ways:
+Way 1 (with storage):
+Write down every person’s name from both trees and compare the lists afterward.
+Way 2 (without storage):
+Compare directly:
+Are both grandfathers the same?
+Are both fathers the same?
+Are both sons the same?
+
+You don’t need to write anything down — you just compare as you go.
+That’s exactly what the code is doing.
+
+6) So, where is the data "stored"?
+Now here’s the trick — it isn’t stored in a list or a set.
+However, temporarily, when the function calls itself recursively, Python keeps track of:
+the current node you’re comparing
+where to go next (left or right)
+This temporary memory is called the call stack.
+It’s automatically managed by Python — so we don’t have to manually store anything.
+When each comparison finishes, Python “pops” that memory and goes back to the previous step.
+So even though we don’t create a list, Python internally keeps track of what part of the tree we’re on through recursion.
+        """

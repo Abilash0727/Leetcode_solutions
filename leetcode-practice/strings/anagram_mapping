@@ -1,0 +1,52 @@
+# Here we have given 2 arrays (lists) with a set of integers.
+# Our goal is to find the "anagram mapping" between these two lists.
+# Beginner-friendly explanation: each value in t appears at least once,
+# and all values in t are unique — so there is one index per value.
+
+def anagram_mapping():
+    # Step 1: define our two lists
+    # s = list we want to map from
+    # t = list we want to map to (contains the same elements as s but in a different order)
+    s = [16, 5, 12, 10]
+    t = [5, 10, 12, 16]
+
+    # Step 2: create an empty dictionary to store the position (index) of each value in t.
+    # We'll use this dictionary to quickly look up where each value from s appears in t.
+    # Key   -> value from list t
+    # Value -> index (position) of that value in t
+    index_map = {}
+
+    # Step 3: fill the dictionary with mappings from each number in t to its index.
+    # We loop over the range of indices for list t: 0, 1, 2, ...
+    for i in range(len(t)):
+        # t[i] gives the value at index i in list t
+        # Store this value and its index in the dictionary
+        index_map[t[i]] = i
+
+    # After this loop, our dictionary looks like this:
+    # {5: 0, 10: 1, 12: 2, 16: 3}
+    # This means:
+    # - 5 is at position 0 in t
+    # - 10 is at position 1 in t
+    # - 12 is at position 2 in t
+    # - 16 is at position 3 in t
+
+    # Step 4: now we build the final mapping result.
+    # For each number in s, we look up its corresponding index in t (using the dictionary)
+    # and store that index in a new list.
+    mapping_result = []
+    for num in s:
+        # Look up the index of 'num' in the dictionary and append it to the result list
+        mapping_result.append(index_map[num])
+
+    # Step 5: print and return the final mapping result
+    # This shows the order of indices in t that correspond to the elements of s
+    print("Anagram mapping:", mapping_result)
+    return mapping_result
+
+
+# Step 6: Call the function so it actually runs
+# Expected output:
+# Anagram mapping: [3, 0, 2, 1]
+anagram_mapping()
+

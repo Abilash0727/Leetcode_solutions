@@ -1,0 +1,10 @@
+from queue import Queue
+class solution:
+    def maze1(maze, start, destination):
+        start_row, start_col = start
+        destination_row, destination_col = destination
+        rows = len(maze)
+        cols = len(maze(0))
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        visited = set()
+        visited.add((start_row, start_col))
